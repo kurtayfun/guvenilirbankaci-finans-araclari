@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kredi Kartı Gecikme Tuzağı Hesaplayıcı - Güvenilir Bankacı</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Üst Başlık ve Sabit Menü (Tüm Sitede Standart) -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">GÜVENİLİR BANKACI</a>
+        <div class="navbar-menu">
+            <a href="mevduat-hesapla.html">Mevduat</a>
+            <a href="kredi-karti-gecikme.html" style="background: rgba(255, 255, 255, 0.15);">Kredi Kartı</a>
+            <a href="https://x.com/kurtayfun" target="_blank" style="color: #1da1f2; font-weight: 700;">𝕏 Takip Et</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 style="color: var(--primary-color); margin-bottom: 5px; font-size: 24px; text-align: center;">Kredi Kartı Gecikme Tuzağı Hesaplayıcı</h2>
+        <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px; font-size: 14px;">1 Günlük Gecikmenin Arkasındaki Gerçek Faiz Yükünü Hesaplayın</p>
+        
+        <!-- Giriş Formu Kutusu -->
+        <div class="form-group" style="background: #fff; padding: 20px; border-radius: 8px; border-top: 4px solid var(--danger-color); box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            
+            <div class="form-group">
+                <label for="donemBorcu">Toplam Dönem Borcu (TL)</label>
+                <input type="text" id="donemBorcu" placeholder="Örn: 50.000" oninput="formatInput(this)">
+            </div>
+            
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="kartLimiti">Kart Toplam Limiti (TL)</label>
+                <input type="text" id="kartLimiti" placeholder="Örn: 100.000" oninput="formatInput(this)">
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="gecikmeGunu">Son Ödeme Tarihinden Sonra Kaç Gün Geçti?</label>
+                <input type="number" id="gecikmeGunu" placeholder="Örn: 1" min="1">
+            </div>
+            
+        </div>
+
+        <!-- Hesaplama Butonu -->
+        <div style="margin-top: 20px;">
+            <button class="btn-submit" style="background-color: var(--danger-color);" onclick="hesapla()">Gizli Maliyeti Hesapla</button>
+        </div>
+
+        <!-- Sonuç Alanı -->
+        <div id="resultBox" class="result-box" style="display:none; margin-top: 25px;">
+            <h3 id="resultTitle" style="margin-top: 0; color: var(--danger-color);">⚠️ Hesaplama Sonuçları</h3>
+            <table>
+                <tr>
+                    <td>Kartınızın Asgari Ödeme Tutarı:</td>
+                    <td><span id="resAsgari"></span> TL</td>
+                </tr>
+                <tr>
+                    <td>Faiz İşletilen Toplam Gün (10 Gün + Gecikme):</td>
+                    <td><span id="resGun"></span> Gün</td>
+                </tr>
+                <tr>
+                    <td style="color: var(--danger-color); font-weight: 700;">Ekstreye Yansıyacak Gerçek Maliyet (Vergili):</td>
+                    <td style="color: var(--danger-color); font-weight: 700;"><span id="resGercek"></span> TL</td>
+                </tr>
+                <tr>
+                    <td>Zan Edilen Düz Mantık Maliyet:</td>
+                    <td><span id="resZan"></span> TL</td>
+                </tr>
+                <tr style="background-color: #fff5f5;">
+                    <td style="font-weight: 700; color: #c53030;">Gizli Fark Tuzağı (Uğranılan Zarar):</td>
+                    <td style="font-weight: 700; color: #c53030;"><span id="resFark"></span> TL</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- STANDART BİLGİLENDİRME KUTUSU (Tüm Sitede Aynı Yapıda) -->
+        <div class="result-box" style="border-top: 4px solid var(--accent-color); margin-top: 25px; background: #fff;">
+            <h4 style="margin-top: 0; color: var(--primary-color); font-size: 16px;">💡 Bu Hesaplama Nasıl Yapılıyor?</h4>
+            <p style="font-size: 14px; color: #555; margin-bottom: 0; line-height: 1.5;">
+                Kredi kartı borcu son ödeme tarihinde tamamen kapatılmadığında faiz geriye dönük işler. Hesap kesimi ile son ödeme tarihi arasındaki <b>10 günlük süre</b> otomatik olarak ceza günlerine eklenir[cite: 1]. TCMB'nin 2026 yasal kademeli faiz oranları ($30\text{ bin TL}$ altı, $30-180\text{ bin TL}$ arası ve $180\text{ bin TL}$ üstü) borç büyüklüğünüze göre seçilir. Çıkan net faiz tutarına devlet adına <b>%15 KKDF ve %15 BSMV</b> (toplamda %30 yasal vergi çarpanı) eklenerek ekstre maliyetiniz bulunur.
+            </p>
+        </div>
+
+        <!-- STANDART YASAL UYARI KUTUSU (Tüm Sitede Sabit) -->
+        <div class="alert-box">
+            <strong>⚠️ Yasal Uyarı:</strong> Bu platformda yapılan hesaplamalar yalnızca genel bilgilendirme ve finansal okuryazarlığı artırma amaçlıdır. Bankaların uyguladığı yasal yuvarlamalar, anlık faiz değişiklikleri, stopaj güncellemesi veya hesap kesim tarihlerindeki gün bazlı farklılıklar nedeniyle resmi ekstrelerinizle küçük uyumsuzluklar gösterebilir. Burada yer alan hiçbir veri yatırım tavsiyesi niteliği taşımamaktadır. Resmi işlemleriniz için lütfen bankanızın sağladığı verileri esas alınız.
+        </div>
+
+    </div>
+
+    <!-- Footer Alanı (Tüm Sitede Standart) -->
+    <div class="footer">
+        <p style="margin-bottom: 10px;">
+            <b>Güvenilir Bankacı Finansal Okuryazarlık Platformu © 2026</b>
+        </p>
+        <p style="margin-bottom: 15px; font-size: 13px;">
+            Geliştirici ve Analiz: <a href="https://x.com/kurtayfun" target="_blank" style="color: #1da1f2; text-decoration: none; font-weight: bold;">@kurtayfun (𝕏)</a>
+        </p>
+    </div>
+
+<script>
+function formatInput(input) {
+    let value = input.value.replace(/\D/g, "");
+    if (value === "") {
+        input.value = "";
+        return;
+    }
+    input.value = new Intl.NumberFormat('tr-TR').format(parseInt(value));
+}
+
+function getRawValue(id) {
+    const val = document.getElementById(id).value.replace(/\./g, "");
+    return parseFloat(val);
+}
+
+function hesapla() {
+    const donemBorcu = getRawValue('donemBorcu');
+    const kartLimiti = getRawValue('kartLimiti');
+    const gecikmeGunu = parseInt(document.getElementById('gecikmeGunu').value);
+
+    if (isNaN(donemBorcu) || isNaN(kartLimiti) || isNaN(gecikmeGunu)) {
+        alert("Lütfen tüm alanları eksiksiz doldurun.");
+        return;
+    }
+
+    if (gecikmeGunu < 1) {
+        alert("Gecikme gün sayısı en az 1 gün olmalıdır.");
+        return;
+    }
+
+    // 1. Limit Bazlı Asgari Oran Tespiti (BDDK)
+    let asgariOran = (kartLimiti < 50000) ? 0.20 : 0.40;
+    let asgariTutar = donemBorcu * asgariOran;
+
+    // 2. Kademeli Faiz Oranları Tespiti (TCMB 2026 Mevzuatı)
+    let akdiOran, gecikmeOran;
+    if (donemBorcu < 30000) {
+        akdiOran = 3.25 / 100;
+        gecikmeOran = 3.55 / 100;
+    } else if (donemBorcu <= 180000) {
+        akdiOran = 3.75 / 100;
+        gecikmeOran = 4.05 / 100;
+    } else {
+        akdiOran = 4.25 / 100;
+        gecikmeOran = 4.55 / 100;
+    }
+
+    // 3. Matematiksel Faiz İşletimi
+    // Dönem 1: Hesap kesim ile son ödeme arası (Sabit 10 gün akdi faiz)[cite: 1]
+    let faizDonem1 = donemBorcu * akdiOran * (10 / 30);
+
+    // Dönem 2: Son ödemeden sonra geçen süre (Asgariya gecikme, kalana akdi)
+    let faizGecikmeAsgari = asgariTutar * gecikmeOran * (gecikmeGunu / 30);
+    let faizAkdiKalan = (donemBorcu - asgariTutar) * akdiOran * (gecikmeGunu / 30);
+
+    // 4. Vergi Dahil Net Maliyet (%15 KKDF + %15 BSMV = %30 Çarpanı)
+    let netToplamFaiz = faizDonem1 + faizGecikmeAsgari + faizAkdiKalan;
+    let gercekVergiliMaliyet = netToplamFaiz * 1.30;
+
+    // Vatandaşın Düz Mantık Zannettiği Yanılsama (Sadece gecikilen gün kadar düz gecikme faizi)
+    let vatandasinZannettigi = (donemBorcu * gecikmeOran * (gecikmeGunu / 30)) * 1.30;
+    let gizliFark = gercekVergiliMaliyet - vatandasinZannettigi;
+
+    // Sonuçları Ekrana Yazdırma
+    document.getElementById('resAsgari').innerText = asgariTutar.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('resGun').innerText = gecikmeGunu + 10;
+    document.getElementById('resGercek').innerText = gercekVergiliMaliyet.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('resZan').innerText = vatandasinZannettigi.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('resFark').innerText = gizliFark.toLocaleString('tr-TR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    const resultBox = document.getElementById('resultBox');
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
