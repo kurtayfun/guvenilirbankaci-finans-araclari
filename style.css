@@ -1,3 +1,6 @@
+
+
+
 /* style.css */
 :root {
     --primary-color: #2c3e50;    /* Güvenilir Bankacı Laciverti */
@@ -28,45 +31,18 @@ body {
     border-bottom: 3px solid var(--accent-color);
 }
 
-@media (min-width: 600px) {
-    .navbar {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 15px 40px;
-    }
-}
-
-/* Geliştirilmiş SVG Logolu Marka Alanı */
 .navbar-brand {
     color: white;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 800;
     text-decoration: none;
     letter-spacing: 0.5px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-@media (min-width: 600px) {
-    .navbar-brand {
-        margin-bottom: 0;
-    }
-}
-
-.navbar-icon {
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
-}
-
-.navbar-brand:hover .navbar-icon {
-    transform: rotate(-10deg) scale(1.1); /* Logoya hafif dinamizm katma */
+    margin-bottom: 10px;
 }
 
 .navbar-menu {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -76,17 +52,13 @@ body {
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
-    padding: 8px 14px;
-    border-radius: 6px;
-    transition: background 0.2s, transform 0.1s;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background 0.2s;
 }
 
 .navbar-menu a:hover {
     background: rgba(255, 255, 255, 0.1);
-}
-
-.navbar-menu a:active {
-    transform: scale(0.95); /* Mobil menü dokunma hissi */
 }
 
 /* Ana Konteyner */
@@ -103,7 +75,7 @@ body {
 }
 
 .category-title {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--primary-color);
     border-left: 4px solid var(--accent-color);
     padding-left: 10px;
@@ -138,11 +110,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.menu-card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
 }
 
 .menu-card:active {
@@ -169,7 +137,6 @@ body {
     margin: 0;
     font-size: 14px;
     color: #7f8c8d;
-    line-height: 1.5;
 }
 
 /* Tek Elle Kullanım İçin Form Elemanları (Input & Button) */
@@ -182,7 +149,6 @@ body {
     margin-bottom: 6px;
     font-weight: 600;
     font-size: 15px;
-    color: var(--primary-color);
 }
 
 /* Mobilde klavye açıldığında rahat yazılması için input boyutu büyütüldü */
@@ -190,18 +156,16 @@ input, select {
     width: 100%;
     height: 50px; 
     padding: 0 15px;
-    font-size: 16px; /* iOS otomatik zoom engellemek için min 16px */
-    border: 1px solid #cbd5e0;
+    font-size: 16px; /* iOS zoom engellemek için min 16px */
+    border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
     background-color: #fff;
-    transition: border-color 0.2s;
 }
 
 input:focus {
     border-color: var(--accent-color);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
 /* Büyük Mobil Buton */
@@ -216,14 +180,10 @@ input:focus {
     font-weight: 700;
     cursor: pointer;
     transition: background 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .btn-submit:active {
     background-color: #2980b9;
-    transform: scale(0.99);
 }
 
 /* Sonuç Tabloları ve Kutuları */
@@ -233,7 +193,6 @@ input:focus {
     border-radius: 8px;
     margin-top: 25px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    box-sizing: border-box;
 }
 
 table {
@@ -242,32 +201,25 @@ table {
 }
 
 td {
-    padding: 12px 8px;
+    padding: 12px 0;
     border-bottom: 1px solid #edf2f7;
-    font-size: 14px;
-    color: #4a5568;
-}
-
-tr:last-child td {
-    border-bottom: none;
+    font-size: 15px;
 }
 
 td:last-child {
     text-align: right;
     font-weight: 700;
-    color: var(--primary-color);
 }
 
 /* Uyarı Kutuları */
 .alert-box {
-    background-color: #f7fafc;
-    color: #4a5568;
+    background-color: #fff5f5;
+    color: #c53030;
     padding: 15px;
-    border-left: 4px solid #718096;
+    border-left: 4px solid var(--danger-color);
     border-radius: 4px;
-    font-size: 13px;
-    margin-top: 25px;
-    line-height: 1.5;
+    font-size: 14px;
+    margin-top: 15px;
 }
 
 /* Footer */
@@ -278,6 +230,5 @@ td:last-child {
     color: #7f8c8d;
     background-color: #fff;
     border-top: 1px solid #e2e8f0;
-    margin-top: 45px;
-    line-height: 1.6;
+    margin-top: 40px;
 }
