@@ -42,7 +42,7 @@
 
             <div class="form-group" style="margin-top: 15px;">
                 <label for="gecikmeGunu">Son Ödeme Tarihinden Sonra Kaç Gün Geçti?</label>
-                <input type="text" id="gecikmeGunu" inputmode="numeric" pattern="[0-9]*" placeholder="Örn: 1" oninput="validateDayInput(this)">
+                <input type="text" id="gecikmeGunu" inputmode="numeric" pattern="[0-9]*" placeholder="Örn: 1" oninput="formatInput(this)">
             </div>
             
         </div>
@@ -87,40 +87,4 @@
                     <td><span id="resBsmv"></span> TL</td>
                 </tr>
                 <tr style="background-color: #fff5f5; font-size: 16px;">
-                    <td style="font-weight: 700; color: #c53030;">Ekstreye Yansıyacak Toplam Maliyet:</td>
-                    <td style="font-weight: 700; color: #c53030;"><span id="resGercek"></span> TL</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="result-box" style="border-top: 4px solid var(--accent-color); margin-top: 25px; background: #fff;">
-            <h4 style="margin-top: 0; color: var(--primary-color); font-size: 16px;">💡 Bu Hesaplama Nasıl Yapılıyor?</h4>
-            <p style="font-size: 14px; color: #555; margin-bottom: 0; line-height: 1.5;">
-                Kredi kartı borcu son ödeme tarihinde tamamen kapatılmadığında faiz geriye dönük işler. Hesap kesimi ile son ödeme tarihi arasındaki <b>10 günlük süre</b> otomatik olarak hesaplamaya dahil edilir. TCMB'nin güncel yasal kademeli faiz oranları (30.000 TL altı, 30.000 TL - 180.000 TL arası ve 180.000 TL üstü) borç büyüklüğünüze göre sistem tarafından otomatik seçilir. Çıkan net faiz tutarına devlet adına <b>%15 KKDF ve %15 BSMV</b> (toplamda %30 yasal vergi yükü) eklenerek gerçek ekstre maliyetiniz hesaplanır.
-            </p>
-        </div>
-
-        <div class="alert-box">
-            <strong>⚠️ Yasal Uyarı:</strong> Bu platformda yapılan hesaplamalar yalnızca genel bilgilendirme ve finansal okuryazarlığı artırma amaçlıdır. Bankaların uyguladığı yasal yuvarlamalar, anlık faiz değişiklikleri, stopaj güncellemesi veya hesap kesim tarihlerindeki gün bazlı farklılıklar nedeniyle resmi ekstrelerinizle küçük uyumsuzluklar gösterebilir. Burada yer alan hiçbir veri yatırım tavsiyesi niteliği taşımamaktadır. Resmi işlemleriniz için lütfen bankanızın sağladığı verileri esas alınız.
-        </div>
-
-    </div>
-
-    <div class="footer">
-        <p style="margin-bottom: 10px;">
-            <b>Güvenilir Bankacı Finansal Okuryazarlık Platformu © 2026</b>
-        </p>
-        <p style="margin-bottom: 15px; font-size: 13px;">
-            Geliştirici ve Analiz: <a href="https://x.com/kurtayfun" target="_blank" style="color: #1da1f2; text-decoration: none; font-weight: bold;">Güvenilir Bankacı (𝕏)</a>
-        </p>
-    </div>
-
-<script>
-function formatInput(input) {
-    let value = input.value.replace(/\D/g, "");
-    if (value === "") {
-        input.value = "";
-        return;
-    }
-    input.value = new Intl.
-        
+                    <td style="font-weight: 7
