@@ -8,12 +8,21 @@
 </head>
 <body>
 
-    <!-- Üst Başlık ve Sabit Menü (Tüm Sitede Standart) -->
+    <!-- Üst Başlık ve Sabit Menü (Gelişmiş SVG Logolu Standart Navbar) -->
     <nav class="navbar">
-        <a href="index.html" class="navbar-brand">GÜVENİLİR BANKACI</a>
+        <a href="index.html" class="navbar-brand">
+            <!-- Finans ve Güven Temalı Saf SVG İkon -->
+            <svg class="navbar-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle; color: #3498db;">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 8v8"/>
+                <path d="M9 11l3-3 3 3"/>
+            </svg>
+            <span style="font-weight: 300; opacity: 0.85; letter-spacing: 0.5px;">GÜVENİLİR</span><span style="font-weight: 800; letter-spacing: 0.5px;"> BANKACI</span>
+        </a>
         <div class="navbar-menu">
-            <a href="mevduat-hesapla.html" style="background: rgba(255, 255, 255, 0.15);">Mevduat</a>
+            <a href="mevduat-hesapla.html" style="background: rgba(255, 255, 255, 0.15); font-weight: 700;">Mevduat</a>
             <a href="kredi-karti-gecikme.html">Kredi Kartı</a>
+            <a href="index.html">Tüm Araçlar</a>
         </div>
     </nav>
 
@@ -24,7 +33,7 @@
         <!-- En Üstte Mevduat Tutarı -->
         <div class="form-group" style="background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
             <label for="anapara">Toplam Anapara (Mevduat Tutarı - TL)</label>
-            <input type="text" id="anapara" placeholder="Örn: 500.000" oninput="formatInput(this)">
+            <input type="text" id="anapara" inputmode="numeric" pattern="[0-9]*" placeholder="Örn: 500.000" oninput="formatInput(this)">
         </div>
 
         <!-- Seçenek 1: Günlük Hesaplama Kutusu -->
@@ -32,10 +41,10 @@
             <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--primary-color); font-size: 16px;">Seçenek 1: Günlük Hesap (Bileşik)</h3>
             
             <label for="gunlukOran">Brüt Faiz Oranı (%)</label>
-            <input type="number" id="gunlukOran" step="0.1" placeholder="Örn: 45">
+            <input type="text" id="gunlukOran" inputmode="decimal" placeholder="Örn: 45.5" oninput="formatRateInput(this)">
             
             <label style="margin-top: 10px;" for="bostaKalan">Boşta Kalan Vadesiz Tutar (TL)</label>
-            <input type="text" id="bostaKalan" placeholder="Örn: 20.000" oninput="formatInput(this)">
+            <input type="text" id="bostaKalan" inputmode="numeric" pattern="[0-9]*" placeholder="Örn: 20.000" oninput="formatInput(this)">
         </div>
 
         <!-- Seçenek 2: Normal Klasik Vadeli Hesaplama Kutusu -->
@@ -43,10 +52,10 @@
             <h3 style="margin-top: 0; margin-bottom: 15px; color: var(--primary-color); font-size: 16px;">Seçenek 2: Klasik Vadeli Hesap</h3>
             
             <label for="duzOran">Brüt Faiz Oranı (%)</label>
-            <input type="number" id="duzOran" step="0.1" placeholder="Örn: 42">
+            <input type="text" id="duzOran" inputmode="decimal" placeholder="Örn: 42.5" oninput="formatRateInput(this)">
 
             <label style="margin-top: 10px;" for="vadeGun">Vade Gün Sayısı</label>
-            <input type="number" id="vadeGun" placeholder="Örn: 32" min="1" max="365">
+            <input type="text" id="vadeGun" inputmode="numeric" pattern="[0-9]*" placeholder="Örn: 32" oninput="validateDayInput(this)">
         </div>
 
         <!-- Karşılaştırma Butonu -->
@@ -70,7 +79,7 @@
             <p id="comparisonText" style="font-weight: bold; font-size: 16px; margin-top: 15px; margin-bottom: 0; color: var(--primary-color);"></p>
         </div>
 
-        <!-- STANDART BİLGİLENDİRME KUTUSU -->
+        <!-- STANDART BİLGİLENDİRME KUTUSU (Tüm Sitede Aynı Yapıda) -->
         <div class="result-box" style="border-top: 4px solid var(--accent-color); margin-top: 25px; background: #fff;">
             <h4 style="margin-top: 0; color: var(--primary-color); font-size: 16px;">💡 Bu Hesaplama Nasıl Yapılıyor?</h4>
             <p style="font-size: 14px; color: #555; margin-bottom: 0; line-height: 1.5;">
@@ -78,16 +87,18 @@
             </p>
         </div>
 
-        <!-- STANDART YASAL UYARI KUTUSU -->
+        <!-- STANDART YASAL UYARI KUTUSU (Tüm Sitede Sabit) -->
         <div class="alert-box">
             <strong>⚠️ Yasal Uyarı:</strong> Bu platformda yapılan hesaplamalar yalnızca genel bilgilendirme ve finansal okuryazarlığı artırma amaçlıdır. Bankaların uyguladığı yasal yuvarlamalar, anlık faiz değişiklikleri, stopaj güncellemesi veya hesap kesim tarihlerindeki gün bazlı farklılıklar nedeniyle resmi ekstrelerinizle küçük uyumsuzluklar gösterebilir. Burada yer alan hiçbir veri yatırım tavsiyesi niteliği taşımamaktadır. Resmi işlemleriniz için lütfen bankanızın sağladığı verileri esas alınız.
         </div>
 
     </div>
 
-    <!-- Footer Alanı (Tüm Sitede Standart) -->
+    <!-- Footer Alanı (X Bağlantısı Sadece En Altta Sabit) -->
     <div class="footer">
-        <p><b>Güvenilir Bankacı Finansal Okuryazarlık Platformu © 2026</b></p>
+        <p style="margin-bottom: 10px;">
+            <b>Güvenilir Bankacı Finansal Okuryazarlık Platformu © 2026</b>
+        </p>
         <p style="margin-bottom: 15px; font-size: 13px;">
             Geliştirici ve Analiz: <a href="https://x.com/kurtayfun" target="_blank" style="color: #1da1f2; text-decoration: none; font-weight: bold;">Güvenilir Bankacı (𝕏)</a>
         </p>
@@ -95,12 +106,28 @@
 
 <script>
 function formatInput(input) {
+    // Sadece rakamları tut, harfleri temizle
     let value = input.value.replace(/\D/g, "");
     if (value === "") {
         input.value = "";
         return;
     }
     input.value = new Intl.NumberFormat('tr-TR').format(parseInt(value));
+}
+
+function validateDayInput(input) {
+    // Sadece rakamları kabul et
+    input.value = input.value.replace(/\D/g, "");
+}
+
+function formatRateInput(input) {
+    // Sadece rakam ve tek nokta kabul et, harfleri temizle
+    let value = input.value.replace(/[^0-9.]/g, "");
+    const pointCount = (value.match(/\./g) || []).length;
+    if (pointCount > 1) {
+        value = value.substr(0, value.lastIndexOf('.'));
+    }
+    input.value = value;
 }
 
 function getRawValue(id) {
